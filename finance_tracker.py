@@ -51,15 +51,24 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+import os
+
+# Check if file exists before reading
+if os.path.exists('finance_data.csv'):
+    st.session_state.transactions = pd.read_csv('finance_data.csv')
+else:
+    st.warning("No transaction history found. Add a transaction first!")
+    st.session_state.transactions = pd.DataFrame(columns=["Date", "Category", "Amount"])
+
 
 # Initialize session state for data
-if 'transactions' not in st.session_state:
-    if os.path.exists('finance_data.csv'):
+if os.path.exists('finance_data.csv') and os.path.getsize('finance_data.csv') > 0:
+    try:
         st.session_state.transactions = pd.read_csv('finance_data.csv')
-    else:
-        st.session_state.transactions = pd.DataFrame(columns=[
-            'Date', 'Type', 'Category', 'Amount', 'Description'
-        ])
+    except pd.errors.EmptyDataError:
+        st.session_state.transactions = pd.DataFrame(columns=["Date", "Type", "Category", "Amount", "Description"])
+else:
+    st.session_state.transactions = pd.DataFrame(columns=["Date", "Type", "Category", "Amount", "Description"])
 
 # Save to CSV function
 def save_data():
