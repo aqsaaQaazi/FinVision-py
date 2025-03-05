@@ -86,7 +86,7 @@ with st.container():
         date = st.date_input("📅 Date", datetime.today())
     with col2:
         category = st.selectbox("🏷 Category", 
-            ['Food', 'Transport', 'Housing', 'Entertainment', 'Salary', 'Other'])
+            ['Food', 'Transport', 'Housing', 'Entertainment', 'Salary', 'Educational Fees', 'Rent','Other'])
     with col3:
         amount = st.number_input("💵 Amount", min_value=0.0, step=10.0)
     with col4:
@@ -124,9 +124,11 @@ with st.container():
     with col1:
         st.metric("💰 Total Balance", f"${balance:,.2f}", delta_color="off")
     with col2:
-        st.metric("📈 Total Income", f"${total_income:,.2f}", delta="+5% vs last month")
+        st.metric("📈 Total Income", f"${total_income:,.2f}" )
+                                                        # delta="+5% vs last month"
     with col3:
-        st.metric("📉 Total Expenses", f"${total_expense:,.2f}", delta="-3% vs last month")
+        st.metric("📉 Total Expenses", f"${total_expense:,.2f}" )
+                                                            # delta="-3% vs last month"
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Visualizations
